@@ -105,16 +105,6 @@ O **Neurelix** é uma empresa especializada em soluções full-stack com IA e au
 └── /cookies (Política de cookies)
 ```
 
-## 🔧 Configuração da Porta
-
-O projeto suporta configuração de porta através de variáveis de ambiente:
-
-```bash
-# Arquivo .env.local
-PORT=3000
-WHATSAPP_NUMBER=5566999999999
-```
-
 ## 📊 Métricas e Analytics
 
 - **SEO Otimizado** - Meta tags e dados estruturados
