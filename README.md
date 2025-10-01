@@ -1,214 +1,136 @@
-# Neurelix Website
+# Neurelix - Website Corporativo
 
-## Descrição
-Este é o website oficial da Neurelix, uma empresa especializada em soluções full-stack com IA e automação, acessíveis e sob medida.
+## 🧠 Sobre o Projeto
 
-## Tecnologias utilizadas
-- Next.js 14 (App Router)
-- React 18
-- TypeScript
-- TailwindCSS
-- shadcn/ui
-- lucide-react
-- Framer Motion
-- MDX
-- next-intl (i18n)
-- next-seo
-- JSON-LD (Schema.org)
+O **Neurelix** é uma empresa especializada em soluções full-stack com IA e automação, oferecendo desenvolvimento sob medida com custo acessível. Este website corporativo apresenta nossos serviços, tecnologias e cases de sucesso.
 
-## Pré-requisitos
-- Node.js 18 ou superior
+## 🚀 Funcionalidades
 
-## Configuração da Porta
+### Páginas Principais
+- **Home** - Apresentação da empresa e principais soluções
+- **Soluções** - Catálogo detalhado de serviços oferecidos
+- **Exemplos** - Demonstrações interativas das soluções
+- **Cases** - Estudos de caso e projetos realizados
+- **Tecnologias** - Stack tecnológico e ferramentas utilizadas
+- **Preços** - Planos e valores dos serviços
+- **Sobre** - História e equipe da Neurelix
+- **Contato** - Formulário de contato e informações
 
-### Opção 1: Variável de Ambiente
-Crie um arquivo `.env.local` na raiz do projeto:
+### Páginas Legais
+- **Termos de Uso** - Condições de uso dos serviços
+- **Política de Privacidade** - Tratamento de dados pessoais
+- **Política de Cookies** - Uso de cookies no website
+
+## 🎨 Design e UX
+
+### Tema Cyber/Neural
+- **Paleta de Cores**: Verde neon (#22c55e) e azul (#3b82f6) sobre fundo preto
+- **Efeitos Visuais**: Gradientes, brilhos, animações de grid neural
+- **Tipografia**: Inter (texto) e JetBrains Mono (código)
+- **Animações**: Transições suaves entre páginas com Framer Motion
+
+### Componentes Reutilizáveis
+- **NeurelixLogo** - Logo oficial com efeitos neon
+- **BrandBackground** - Fundo personalizado com imagem da marca
+- **PageTransition** - Animações de transição entre páginas
+- **SectionHeader** - Cabeçalhos padronizados para seções
+
+## 🛠️ Tecnologias
+
+### Frontend
+- **Next.js 14** - Framework React com App Router
+- **React 18** - Biblioteca de interface
+- **TypeScript** - Tipagem estática
+- **Tailwind CSS** - Framework de estilos utilitários
+- **Framer Motion** - Animações e transições
+- **Lucide React** - Ícones modernos
+
+### SEO e Performance
+- **Metadata API** - SEO otimizado
+- **JSON-LD** - Dados estruturados para buscadores
+- **Sitemap** - Mapa do site automático
+- **Robots.txt** - Diretrizes para crawlers
+
+### Funcionalidades
+- **API Routes** - Endpoints para formulário de contato
+- **Responsive Design** - Adaptável a todos os dispositivos
+- **Dark Theme** - Tema escuro cyber/neural
+- **Acessibilidade** - Componentes acessíveis
+
+## 📱 Soluções Oferecidas
+
+### Assistentes de WhatsApp
+- Agendamento automático
+- Suporte 24/7
+- Atendimento inteligente
+
+### Sistemas Web e APIs
+- Painéis administrativos
+- Integrações personalizadas
+- Automações de processos
+
+### Apps Mobile/IoT
+- Aplicativos nativos
+- Integração com dispositivos IoT
+- Soluções híbridas
+
+## 🎯 Público-Alvo
+
+- **Empresas** que precisam de automação
+- **Profissionais** que buscam soluções de IA
+- **Startups** que querem escalar com tecnologia
+- **Negócios** que precisam de integração WhatsApp
+
+## 💡 Diferenciais
+
+- **Custo Acessível** - Soluções sob medida sem preços exorbitantes
+- **Entrega Ágil** - Desenvolvimento rápido e eficiente
+- **Suporte Completo** - Acompanhamento pós-entrega
+- **Tecnologia Atual** - Stack moderna e atualizada
+
+## 🌐 Estrutura do Site
+
+```
+/
+├── / (Home)
+├── /solucoes (Catálogo de serviços)
+├── /exemplos (Demonstrações)
+├── /cases (Projetos realizados)
+├── /tecnologias (Stack tecnológico)
+├── /precos (Planos e valores)
+├── /sobre (Empresa)
+├── /contato (Formulário)
+├── /termos (Termos de uso)
+├── /privacidade (Política de privacidade)
+└── /cookies (Política de cookies)
+```
+
+## 🔧 Configuração da Porta
+
+O projeto suporta configuração de porta através de variáveis de ambiente:
+
 ```bash
+# Arquivo .env.local
 PORT=3000
 WHATSAPP_NUMBER=5566999999999
 ```
 
-### Opção 2: Scripts Pré-configurados
-Use os scripts já configurados no `package.json`:
-```bash
-# Porta padrão (3000)
-npm run dev
+## 📊 Métricas e Analytics
 
-# Porta 3001
-npm run dev:3001
+- **SEO Otimizado** - Meta tags e dados estruturados
+- **Performance** - Carregamento rápido e otimizado
+- **Acessibilidade** - Padrões WCAG
+- **Mobile-First** - Design responsivo
 
-# Porta 8080
-npm run dev:8080
-```
+## 🎨 Identidade Visual
 
-### Opção 3: Variável de Ambiente Temporária
-```bash
-# Linux/Mac
-PORT=8080 npm run dev
+A identidade visual da Neurelix é baseada em:
+- **Cores**: Verde neon e azul sobre fundo preto
+- **Estilo**: Cyber/neural com efeitos futuristas
+- **Logo**: Cérebro neural com efeitos de brilho
+- **Tipografia**: Moderna e legível
+- **Animações**: Suaves e profissionais
 
-# Windows
-set PORT=8080 && npm run dev
-```
-- npm ou yarn
-
-## Instalação
-
-1. Clone este repositório:
-```bash
-git clone https://github.com/Giuseph66/neurelix-website.git
-```
-
-2. Navegue até o diretório do projeto:
-```bash
-cd neurelix-website
-```
-
-3. Instale as dependências:
-```bash
-npm install
-```
-
-4. Crie um arquivo `.env.local` na raiz do projeto com as seguintes variáveis:
-```env
-# URLs
-NEXT_PUBLIC_APP_URL=https://neurelix.com.br
-
-# Analytics
-NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
-
-# Contato
-NEXT_PUBLIC_CONTACT_EMAIL=contato@neurelix.com.br
-NEXT_PUBLIC_WHATSAPP_NUMBER=5566XXXXXXXXX
-
-# API Keys
-RESEND_API_KEY=seu_api_key_aqui
-
-# Outros
-NEXT_PUBLIC_LINKEDIN_URL=https://linkedin.com/in/usuario
-```
-
-## Desenvolvimento
-
-Para rodar o projeto em modo de desenvolvimento:
-
-```bash
-npm run dev
-```
-
-O servidor iniciará em `http://localhost:3000`.
-
-## Build
-
-Para criar uma build de produção:
-
-```bash
-npm run build
-```
-
-## Deploy
-
-Este projeto está configurado para deploy no Vercel. Para fazer o deploy:
-
-1. Faça login no Vercel: `vercel login`
-2. Faça o deploy: `vercel --prod`
-
-## Estrutura de arquivos
-
-```
-src/
-├── app/                # Páginas do Next.js (App Router)
-│   ├── api/            # Rotas da API
-│   ├── contato/        # Página de contato
-│   ├── solucoes/       # Página de soluções
-│   ├── exemplos/       # Página de exemplos
-│   ├── cases/          # Página de cases
-│   ├── tecnologias/    # Página de tecnologias
-│   ├── precos/         # Página de preços
-│   ├── sobre/          # Página sobre
-│   ├── termos/         # Página de termos
-│   ├── privacidade/    # Página de privacidade
-│   ├── cookies/        # Página de cookies
-│   ├── layout.tsx      # Layout principal
-│   └── page.tsx        # Página inicial
-├── components/         # Componentes reutilizáveis
-├── lib/                # Funções utilitárias e lógica de negócios
-├── styles/             # Arquivos de estilo globais
-└── utils/              # Funções utilitárias
-content/
-├── solutions/          # Conteúdo MDX das soluções
-├── examples/           # Conteúdo MDX dos exemplos
-├── cases/              # Conteúdo MDX dos cases
-└── company/            # Conteúdo MDX da empresa
-```
-
-## Conteúdo dinâmico (MDX)
-
-Para criar novas soluções, exemplos ou cases:
-
-1. Crie um arquivo `.mdx` no diretório apropriado em `/content`
-2. Siga o formato de frontmatter estabelecido nos exemplos existentes
-3. Adicione o conteúdo em Markdown com suporte a componentes React
-
-Exemplo de frontmatter para cases:
-```md
 ---
-title: "Nome do Projeto"
-status: "MVP"
-repo: "https://github.com/usuario/repo"
-stack: ["Tecnologia1","Tecnologia2"]
-problem: "Descrição do problema resolvido."
-solution: "Descrição da solução implementada."
-outcomes: ["Resultado1", "Resultado2"]
-metrics: ["Métrica1", "Métrica2"]
-images:
-  - "URL da imagem 1"
-  - "URL da imagem 2"
----
-```
 
-## Formulário de Contato
-
-O formulário de contato na página `/contato` envia dados para `/api/contact/route.ts`. Para que o envio funcione corretamente em produção, configure uma conta com um serviço de envio de e-mails (como Resend) e adicione a chave de API no arquivo `.env.local`.
-
-## Internacionalização (i18n)
-
-O website está preparado para internacionalização com `next-intl`. Atualmente suporta PT-BR como padrão e EN como idioma opcional. Para adicionar mais idiomas:
-
-1. Crie pastas nomeadas com os códigos de idioma no diretório `src/app`
-2. Copie os arquivos de página para a nova pasta de idioma
-3. Traduza o conteúdo mantendo a estrutura
-
-## SEO
-
-O website está otimizado para SEO com:
-
-- Metadados dinâmicos para cada página
-- Schema.org JSON-LD para Organization e Person
-- Sitemap.xml gerado automaticamente
-- Robots.txt configurado
-- Tags Open Graph e Twitter Cards
-
-## Componentes de UI
-
-Para adicionar novos componentes da shadcn/ui:
-
-```bash
-npx shadcn@latest add [nome-do-componente]
-```
-
-Componentes disponíveis: button, card, input, label, etc.
-
-## Variáveis de ambiente
-
-As seguintes variáveis de ambiente são utilizadas no projeto:
-
-- `NEXT_PUBLIC_APP_URL` - URL base do aplicativo
-- `NEXT_PUBLIC_GA_MEASUREMENT_ID` - ID do Google Analytics (opcional)
-- `NEXT_PUBLIC_CONTACT_EMAIL` - E-mail de contato
-- `NEXT_PUBLIC_WHATSAPP_NUMBER` - Número do WhatsApp com DDI
-- `RESEND_API_KEY` - Chave da API do Resend para envio de e-mails
-- `NEXT_PUBLIC_LINKEDIN_URL` - URL do LinkedIn
-
-## Licença
-
-Este projeto está licenciado sob os termos especificados na empresa Neurelix.# neurelix-website
+**Neurelix** - Transformando ideias em soluções tecnológicas acessíveis e eficientes.
