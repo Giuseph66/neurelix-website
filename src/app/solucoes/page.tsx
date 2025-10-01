@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { ArrowRight, MessageCircle, Code, Zap, Smartphone, Cpu, Globe, Users, FileText, Briefcase, Clock, DollarSign } from 'lucide-react';
+import { ArrowRight, MessageCircle, Code, Zap, Smartphone, Cpu, Globe, Users, FileText, Briefcase, Clock, DollarSign, Wifi, Monitor } from 'lucide-react';
 import Link from 'next/link';
 import NeurelixLogo from '@/components/NeurelixLogo';
 
@@ -20,7 +20,7 @@ const solutions = [
       "Integração com Google Calendar"
     ],
     technologies: ["Node.js", "Express", "WhatsApp API", "MongoDB"],
-    timeline: "5-10 dias",
+    timeline: "20-30 dias",
     cost: "R$ 2.500 - R$ 5.000",
     examples: ["/exemplos/agendamento"],
     icon: MessageCircle
@@ -36,7 +36,7 @@ const solutions = [
       "Encaminhamento inteligente para humanos"
     ],
     technologies: ["Python", "FastAPI", "OpenAI", "React"],
-    timeline: "7-14 dias",
+    timeline: "25-40 dias",
     cost: "R$ 3.000 - R$ 7.000",
     examples: ["/exemplos/chatbot"],
     icon: Cpu
@@ -52,7 +52,7 @@ const solutions = [
       "Relatórios personalizados"
     ],
     technologies: ["Next.js", "TypeScript", "PostgreSQL", "Tailwind"],
-    timeline: "14-30 dias",
+    timeline: "40-60 dias",
     cost: "R$ 5.000 - R$ 12.000",
     examples: ["/exemplos/crm"],
     icon: Users
@@ -68,7 +68,7 @@ const solutions = [
       "Melhoria na eficiência operacional"
     ],
     technologies: ["Node.js", "Express", "Python", "REST APIs"],
-    timeline: "10-20 dias",
+    timeline: "25-45 dias",
     cost: "R$ 4.000 - R$ 8.000",
     examples: ["/exemplos/integracao"],
     icon: Zap
@@ -84,7 +84,7 @@ const solutions = [
       "Design responsivo"
     ],
     technologies: ["Next.js", "React", "Tailwind CSS", "SEO"],
-    timeline: "5-15 dias",
+    timeline: "15-30 dias",
     cost: "R$ 2.000 - R$ 6.000",
     examples: ["/exemplos/site"],
     icon: Globe
@@ -107,18 +107,57 @@ const solutions = [
   },
   {
     id: 7,
-    title: "Aplicativos Mobile/IoT",
-    problem: "(TBD) - Aplicativos para dispositivos móveis e integração IoT.",
-    solution: "(TBD) - Desenvolvimento de aplicativos nativos e híbridos para diversas plataformas.",
-    benefits: ["(TBD)", "(TBD)", "(TBD)"],
-    technologies: ["(TBD)"],
-    timeline: "(TBD)",
-    cost: "(TBD)",
-    examples: [],
-    icon: Smartphone
+    title: "Soluções Mobile + IoT Integradas",
+    problem: "Necessidade de conectar dispositivos IoT com aplicativos móveis para controle e monitoramento remoto.",
+    solution: "Desenvolvimento completo de aplicativos mobile integrados com dispositivos IoT, incluindo hardware especializado e software de controle.",
+    benefits: [
+      "Controle remoto de dispositivos",
+      "Monitoramento em tempo real",
+      "Integração completa entre mobile e IoT",
+      "Notificações push personalizadas"
+    ],
+    technologies: ["Flutter", "React Native", "Arduino", "ESP32", "Node.js", "MQTT"],
+    timeline: "60-120 dias",
+    cost: "R$ 8.000 - R$ 20.000",
+    examples: ["/exemplos/mobile-iot"],
+    icon: Monitor
   },
   {
     id: 8,
+    title: "Aplicativos Mobile",
+    problem: "Falta de aplicativos móveis para Android e iOS que atendam às necessidades específicas do negócio.",
+    solution: "Desenvolvimento de aplicativos nativos e híbridos para Android e iOS com funcionalidades personalizadas.",
+    benefits: [
+      "Presença nas principais lojas de apps",
+      "Experiência otimizada para mobile",
+      "Notificações push e offline",
+      "Integração com recursos nativos do dispositivo"
+    ],
+    technologies: ["Flutter", "React Native", "Swift", "Kotlin", "Firebase"],
+    timeline: "30-90 dias",
+    cost: "R$ 4.000 - R$ 12.000",
+    examples: ["/exemplos/mobile"],
+    icon: Smartphone
+  },
+  {
+    id: 9,
+    title: "Soluções IoT e Hardware",
+    problem: "Necessidade de dispositivos conectados e sensores para automação e coleta de dados.",
+    solution: "Desenvolvimento de hardware especializado com microcontroladores, sensores e conectividade para Internet das Coisas.",
+    benefits: [
+      "Automação de processos físicos",
+      "Coleta de dados em tempo real",
+      "Redução de custos operacionais",
+      "Monitoramento remoto de equipamentos"
+    ],
+    technologies: ["Arduino", "ESP32", "Raspberry Pi", "C/C++", "Python", "MQTT"],
+    timeline: "30-90 dias",
+    cost: "R$ 3.000 - R$ 15.000",
+    examples: ["/exemplos/iot"],
+    icon: Wifi
+  },
+  {
+    id: 10,
     title: "IA Aplicada e Agentes",
     problem: "Processos manuais que poderiam ser automatizados com inteligência artificial.",
     solution: "Implementação de soluções de IA para automação de tarefas cognitivas.",
@@ -128,7 +167,7 @@ const solutions = [
       "Tomada de decisão baseada em dados"
     ],
     technologies: ["Python", "TensorFlow", "OpenAI", "LangChain"],
-    timeline: "15-35 dias",
+    timeline: "35-60 dias",
     cost: "R$ 6.000 - R$ 15.000",
     examples: ["/exemplos/ia"],
     icon: Cpu
@@ -227,6 +266,18 @@ export default function SolutionsPage() {
           })}
         </div>
         
+        <div className="mt-12 bg-neutral-900/30 rounded-lg border border-green-500/20 p-6">
+          <h3 className="text-xl font-bold text-green-400 mb-4">Sobre os Prazos de Desenvolvimento</h3>
+          <div className="space-y-3 text-[#E6EDF3]/80">
+            <p>
+              <strong className="text-green-400">Soluções Integradas (Mobile + IoT):</strong> O prazo de 60-120 dias inclui o desenvolvimento separado de cada plataforma (mobile e IoT) mais o tempo necessário para integração completa entre ambos os sistemas, garantindo comunicação eficiente e funcionalidades sincronizadas.
+            </p>
+            <p>
+              <strong className="text-green-400">Desenvolvimento Separado:</strong> Aplicativos mobile (30-90 dias) e soluções IoT (30-90 dias) podem ser desenvolvidos independentemente, sendo ideais quando você precisa de apenas uma das tecnologias ou quer implementar em fases.
+            </p>
+          </div>
+        </div>
+
         <div className="mt-12 text-center">
           <p className="text-lg text-[#E6EDF3]/80 mb-6">
             Não encontrou a solução ideal para o seu caso? Nossa equipe está pronta para desenvolver soluções personalizadas para atender às suas necessidades específicas.
