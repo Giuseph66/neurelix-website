@@ -3,7 +3,9 @@ import type { Metadata } from 'next'
 import { Inter, JetBrains_Mono } from 'next/font/google'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import ContactSection from '@/components/ContactSection'
 import PageTransition from '@/components/PageTransition'
+import ClientLayout from '@/components/ClientLayout'
 import { getOrganizationJsonLd, getPersonJsonLd } from '@/lib/json-ld'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -52,7 +54,7 @@ export default function RootLayout({
 }) {
   const organizationJsonLd = getOrganizationJsonLd();
   const personJsonLd = getPersonJsonLd();
-  
+
   return (
     <html lang="pt-BR">
       <head>
@@ -66,15 +68,9 @@ export default function RootLayout({
         />
       </head>
       <body className={`${inter.className} ${jetbrainsMono.className}`}>
-        <Navbar />
-        <div className="pt-16 min-h-screen flex flex-col matrix-rain">
-          <main className="flex-grow">
-            <PageTransition>
-              {children}
-            </PageTransition>
-          </main>
-          <Footer />
-        </div>
+        <ClientLayout>
+          {children}
+        </ClientLayout>
       </body>
     </html>
   )

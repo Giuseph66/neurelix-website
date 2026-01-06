@@ -1,69 +1,15 @@
 'use client';
 
 import Link from 'next/link';
-import NeurelixLogo from '@/components/NeurelixLogo';
-import { ArrowRight, MessageCircle, Code, Zap, Smartphone, Cpu, Globe, Users, FileText, Briefcase, Clock, DollarSign, SmartphoneIcon, GlobeIcon, MessageCircleIcon, Database, Bot, ZapIcon, LayoutDashboard } from 'lucide-react';
-// import { motion } from 'framer-motion';
+import { ArrowRight, MessageCircle, Zap, Users, Clock, ZapIcon, Code, Rocket } from 'lucide-react';
+import ContactSection from '@/components/ContactSection';
 
 export default function HomePage() {
   // Hero section with headline and badges
   const heroBadges = [
-    "+15 projetos (TBD)",
+    "+15 projetos entregues",
     "Entrega ágil",
     "Integração com WhatsApp"
-  ];
-
-  // Features for the "Destaques" section
-  const features = [
-    {
-      icon: MessageCircle,
-      title: "Assistentes de WhatsApp",
-      description: "Agendamento, suporte e atendimento automático 24/7"
-    },
-    {
-      icon: LayoutDashboard,
-      title: "Sistemas Web e APIs",
-      description: "Painéis, integrações e automações personalizadas"
-    },
-    {
-      icon: Smartphone,
-      title: "Apps Mobile/IoT",
-      description: "Soluções para dispositivos móveis e IoT (TBD)"
-    }
-  ];
-
-  // Solutions grid
-  const solutions = [
-    {
-      title: "Assistente de Agendamento via WhatsApp",
-      description: "Sistema de marcação automática de horários",
-      icon: MessageCircle
-    },
-    {
-      title: "Chatbots/Agentes para Atendimento",
-      description: "Assistentes virtuais para suporte ao cliente",
-      icon: Bot
-    },
-    {
-      title: "Portais/CRMs sob medida",
-      description: "Sistemas personalizados para gestão de clientes",
-      icon: Users
-    },
-    {
-      title: "Integrações (APIs, ERPs, Pagamentos)",
-      description: "Conectamos seus sistemas de forma eficiente",
-      icon: Zap
-    },
-    {
-      title: "Sites de Conversão/Institucionais",
-      description: "Landing pages e sites institucionais otimizados",
-      icon: Globe
-    },
-    {
-      title: "Automação de Relatórios/IA",
-      description: "Relatórios inteligentes com insights automatizados",
-      icon: FileText
-    }
   ];
 
   return (
@@ -92,16 +38,16 @@ export default function HomePage() {
               className="flex flex-wrap justify-center gap-4 mb-12"
             >
               <Link 
-                href="/solucoes" 
+                href="/exemplos" 
                 className="px-6 py-3 bg-[#00E5FF] text-[#0B0F14] rounded-md font-semibold hover:bg-[#00E5FF]/90 transition-colors flex items-center"
               >
-                Ver Soluções <ArrowRight className="ml-2 h-4 w-4" />
+                Ver Exemplos <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
               <Link 
-                href="/exemplos" 
+                href="#contato" 
                 className="px-6 py-3 bg-[#FF8A00] text-[#0B0F14] rounded-md font-semibold hover:bg-[#FF8A00]/90 transition-colors flex items-center"
               >
-                Exemplos ao vivo <ArrowRight className="ml-2 h-4 w-4" />
+                Fazer Orçamento <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
               <Link 
                 href={`https://wa.me/${process.env.WHATSAPP_NUMBER || '5566999999999'}`} 
@@ -109,7 +55,7 @@ export default function HomePage() {
                 rel="noopener noreferrer"
                 className="px-6 py-3 border border-[#00E5FF] text-[#00E5FF] rounded-md font-semibold hover:bg-[#00E5FF]/10 transition-colors flex items-center"
               >
-                Falar no WhatsApp <ArrowRight className="ml-2 h-4 w-4" />
+                WhatsApp <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </div>
             
@@ -159,7 +105,7 @@ export default function HomePage() {
               { step: 2, title: "Protótipo Rápido", description: "Criamos um MVP funcional em dias", icon: Zap },
               { step: 3, title: "Entrega Iterativa", description: "Entregas contínuas com feedback", icon: Clock },
               { step: 4, title: "Suporte", description: "Assistência contínua após lançamento", icon: MessageCircle }
-            ].map((item, index) => (
+            ].map((item) => (
               <div 
                 key={item.step}
                 className="text-center p-6 bg-neutral-900/50 rounded-lg border border-green-500/20"
@@ -172,111 +118,60 @@ export default function HomePage() {
               </div>
             ))}
           </div>
-          
-          {/* Cost Callout */}
-          <div className="mt-12 bg-gradient-to-r from-green-500/10 to-blue-500/10 rounded-xl p-8 border border-green-500/20 text-center">
-            <h3 className="text-2xl font-bold mb-2">Custo Acessível</h3>
-            <p className="text-lg text-[#E6EDF3]/80 mb-4">Planos flexíveis e transparência total no preço</p>
-            <div className="flex flex-wrap justify-center gap-6">
-              <div>
-                <div className="text-3xl font-bold text-green-400">Planos</div>
-                <div className="text-[#E6EDF3]/80">Flexíveis</div>
+        </div>
+      </section>
+
+      {/* Teaser Preços */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="bg-gradient-to-r from-green-900/10 to-blue-900/10 rounded-2xl p-8 md:p-12 border border-green-500/20 flex flex-col md:flex-row items-center justify-between gap-8">
+            <div className="md:w-2/3">
+              <h2 className="text-3xl font-bold mb-4">Quanto custa tirar sua ideia do papel?</h2>
+              <p className="text-xl text-[#E6EDF3]/80 mb-6">
+                Não cobramos fortunas. Nossos preços começam em <span className="text-green-400 font-bold">R$ 100</span> e vão até onde sua imaginação (e necessidade) alcançar.
+              </p>
+              <div className="flex flex-wrap gap-4">
+                 <div className="flex items-center gap-2 text-sm text-[#E6EDF3]/60">
+                    <Code size={16} /> Sites
+                 </div>
+                 <div className="flex items-center gap-2 text-sm text-[#E6EDF3]/60">
+                    <MessageCircle size={16} /> Bots
+                 </div>
+                 <div className="flex items-center gap-2 text-sm text-[#E6EDF3]/60">
+                    <Rocket size={16} /> IA
+                 </div>
               </div>
-              <div>
-                <div className="text-3xl font-bold text-green-400">Pague</div>
-                <div className="text-[#E6EDF3]/80">Pelo que usa</div>
-              </div>
+            </div>
+            <div className="md:w-1/3 flex justify-center md:justify-end">
+              <Link 
+                href="/precos" 
+                className="px-8 py-4 bg-white text-black rounded-full font-bold hover:bg-gray-200 transition-colors flex items-center"
+              >
+                Ver Tabela Flexível <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Soluções Overview */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Nossas Soluções</h2>
-            <p className="text-lg text-[#E6EDF3]/80 max-w-2xl mx-auto">Desenvolvemos soluções completas para otimizar seu negócio</p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {solutions.map((solution, index) => (
-              <div 
-                key={index}
-                className="bg-neutral-900/50 rounded-lg border border-green-500/20 p-6 hover:border-green-500/50 transition-colors"
-              >
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-green-500/10 to-blue-500/10 flex items-center justify-center mb-4">
-                  <solution.icon className="h-6 w-6 text-green-400" />
-                </div>
-                <h3 className="text-xl font-semibold mb-2">{solution.title}</h3>
-                <p className="text-[#E6EDF3]/70 mb-4">{solution.description}</p>
-                <Link 
-                  href="/solucoes" 
-                  className="text-green-400 font-medium hover:underline flex items-center"
-                >
-                  Saiba mais <ArrowRight className="ml-1 h-4 w-4" />
-                </Link>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Destaques/Features Section */}
+      {/* Teaser Sobre */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-black/40">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Destaques</h2>
-            <p className="text-lg text-[#E6EDF3]/80 max-w-2xl mx-auto">Soluções que fazem a diferença no seu negócio</p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
-              <div 
-                key={index}
-                className="text-center p-6 bg-neutral-900/50 rounded-lg border border-green-500/20"
-              >
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-green-500/10 to-blue-500/10 flex items-center justify-center mx-auto mb-4">
-                  <feature.icon className="h-8 w-8 text-green-400" />
-                </div>
-                <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-                <p className="text-[#E6EDF3]/70">{feature.description}</p>
-              </div>
-            ))}
-          </div>
+        <div className="max-w-7xl mx-auto text-center">
+            <h2 className="text-3xl font-bold mb-6">Quem somos nós?</h2>
+            <p className="text-lg text-[#E6EDF3]/70 max-w-2xl mx-auto mb-8">
+                Neurelix não é apenas uma agência de software. Somos parceiros de tecnologia focados em desburocratizar a inovação.
+            </p>
+            <Link 
+                href="/sobre" 
+                className="text-green-400 font-semibold hover:text-green-300 transition-colors inline-flex items-center"
+            >
+                Conheça nossa história <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
         </div>
       </section>
 
-      {/* Final CTA */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center bg-gradient-to-br from-black to-neutral-900 rounded-xl p-12 border border-green-500/20">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Pronto para tirar sua ideia do papel?</h2>
-          <p className="text-lg text-[#E6EDF3]/80 mb-8">Vamos transformar sua visão em realidade com soluções de IA e automação</p>
-          
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link 
-              href="https://wa.me/5566XXXXXXXXX" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="px-6 py-3 bg-gradient-to-r from-green-500 to-blue-500 text-black rounded-md font-semibold hover:from-green-600 hover:to-blue-600 transition-colors flex items-center"
-            >
-              WhatsApp <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
-            <Link 
-              href="/contato" 
-              className="px-6 py-3 bg-neutral-800 text-white rounded-md font-semibold hover:bg-neutral-700 transition-colors flex items-center"
-            >
-              Fale Conosco <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
-            <Link 
-              href="/contato" 
-              className="px-6 py-3 border border-green-400 text-green-400 rounded-md font-semibold hover:bg-green-500/10 transition-colors"
-            >
-              Agendar reunião
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* Contact Section */}
+      <ContactSection />
     </main>
   );
 }

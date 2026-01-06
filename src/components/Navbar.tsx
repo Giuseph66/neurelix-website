@@ -18,11 +18,9 @@ const Navbar = () => {
   const navItems = [
     { name: 'Soluções', href: '/solucoes' },
     { name: 'Exemplos', href: '/exemplos' },
-    { name: 'Cases', href: '/cases' },
-    { name: 'Tecnologias', href: '/tecnologias' },
     { name: 'Preços', href: '/precos' },
     { name: 'Sobre', href: '/sobre' },
-    { name: 'Contato', href: '/contato' },
+    { name: 'Contato', href: '#contato' },
   ];
 
   return (
@@ -41,11 +39,10 @@ const Navbar = () => {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  pathname === item.href
-                    ? 'bg-gradient-to-r from-green-500/10 to-blue-500/10 text-green-400'
-                    : 'text-[#E6EDF3] hover:text-green-400 hover:bg-black/40'
-                }`}
+                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${pathname === item.href
+                  ? 'bg-gradient-to-r from-green-500/10 to-blue-500/10 text-green-400'
+                  : 'text-[#E6EDF3] hover:text-green-400 hover:bg-black/40'
+                  }`}
               >
                 {item.name}
               </Link>
@@ -54,9 +51,9 @@ const Navbar = () => {
 
 
           {/* WhatsApp CTA */}
-          <Link 
-            href={`https://wa.me/${process.env.WHATSAPP_NUMBER || '5566999086599'}`} 
-            target="_blank" 
+          <Link
+            href={`https://wa.me/${process.env.WHATSAPP_NUMBER || '5566999086599'}`}
+            target="_blank"
             rel="noopener noreferrer"
             className="hidden md:flex items-center px-4 py-2 bg-gradient-to-r from-green-500 to-blue-500 text-black rounded-md text-sm font-semibold hover:from-green-600 hover:to-blue-600 transition-colors"
           >
@@ -80,21 +77,20 @@ const Navbar = () => {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                    pathname === item.href
-                      ? 'bg-gradient-to-r from-green-500/10 to-blue-500/10 text-green-400'
-                      : 'text-[#E6EDF3] hover:text-green-400 hover:bg-black/40'
-                  }`}
+                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${pathname === item.href
+                    ? 'bg-gradient-to-r from-green-500/10 to-blue-500/10 text-green-400'
+                    : 'text-[#E6EDF3] hover:text-green-400 hover:bg-black/40'
+                    }`}
                   onClick={() => setIsOpen(false)}
                 >
                   {item.name}
                 </Link>
               ))}
-              
-              
-              <Link 
-                href={`https://wa.me/${process.env.WHATSAPP_NUMBER || '5566999086599'}`} 
-                target="_blank" 
+
+
+              <Link
+                href={`https://wa.me/${process.env.WHATSAPP_NUMBER || '5566999086599'}`}
+                target="_blank"
                 rel="noopener noreferrer"
                 className="mt-3 w-full text-center px-4 py-2 bg-gradient-to-r from-green-500 to-blue-500 text-black rounded-md text-sm font-semibold hover:from-green-600 hover:to-blue-600 transition-colors"
               >
