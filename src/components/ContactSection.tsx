@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 export default function ContactSection() {
     return (
-        <section id="contato" className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-black to-neutral-900 border-t border-green-500/20">
+        <section id="contato" className="py-16 px-4 sm:px-6 lg:px-8 bg-transparent border-n">
             <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-12">
                     <h2 className="text-3xl md:text-4xl font-bold mb-4">Vamos conversar?</h2>

@@ -515,7 +515,7 @@
 }
 .dashboardPage {
   min-height: 100vh;
-  background: #050707;
+  background: transparent;
   color: #e6edf3;
   display: flex;
   overflow-x: hidden;

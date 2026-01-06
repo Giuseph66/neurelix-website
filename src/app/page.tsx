@@ -1,177 +1,465 @@
-'use client';
-
+import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowRight, MessageCircle, Zap, Users, Clock, ZapIcon, Code, Rocket } from 'lucide-react';
-import ContactSection from '@/components/ContactSection';
+import { readFile, readdir } from 'fs/promises';
+import path from 'path';
+import { ArrowRight, LifeBuoy, PenTool, Rocket, Search } from 'lucide-react';
+import styles from './page.module.css';
 
-export default function HomePage() {
-  // Hero section with headline and badges
-  const heroBadges = [
-    "+15 projetos entregues",
-    "Entrega ágil",
-    "Integração com WhatsApp"
-  ];
+export const metadata: Metadata = {
+  title: 'Neurelix | IA, automacao e sites sob medida',
+  description: 'Solucoes sob medida para vender mais, atender melhor e automatizar rotinas.',
+};
+
+type Objective = {
+  id: string;
+  title: string;
+  result: string;
+  bullets: string[];
+  messageGoal: string;
+};
+
+type DemoPreview = {
+  id: string;
+  title: string;
+  description: string;
+  route: string;
+};
+
+const objectives: Objective[] = [
+  {
+    id: 'pedidos-contatos',
+    title: 'Receber pedidos e contatos',
+    result: 'Mais pedidos chegam organizados e ninguem fica sem resposta.',
+    bullets: ['Botao de pedido', 'Atendimento rapido', 'Fila organizada'],
+    messageGoal: 'receber pedidos e contatos',
+  },
+  {
+    id: 'agenda-confirmacao',
+    title: 'Agendar e confirmar horarios',
+    result: 'Agenda automatica com confirmacao e lembretes.',
+    bullets: ['Horarios disponiveis', 'Confirmacao rapida', 'Lembrete no WhatsApp'],
+    messageGoal: 'agendar e confirmar horarios',
+  },
+  {
+    id: 'crm-vendas',
+    title: 'Organizar clientes e vendas',
+    result: 'Tudo do cliente em um painel simples e claro.',
+    bullets: ['Cadastro centralizado', 'Historico de atendimento', 'Controle de oportunidades'],
+    messageGoal: 'organizar clientes e vendas',
+  },
+  {
+    id: 'integracoes-pagamentos',
+    title: 'Integrar sistemas e pagamentos',
+    result: 'Pagamentos e sistemas falando entre si.',
+    bullets: ['Pagamentos integrados', 'Status atualizado', 'Menos retrabalho'],
+    messageGoal: 'integrar sistemas e pagamentos',
+  },
+  {
+    id: 'relatorios-rotinas',
+    title: 'Automatizar relatorios e rotinas',
+    result: 'Relatorios prontos sem planilha e sem esforco manual.',
+    bullets: ['Relatorios por periodo', 'Alertas inteligentes', 'Rotinas automaticas'],
+    messageGoal: 'automatizar relatorios e rotinas',
+  },
+  {
+    id: 'apps-iot',
+    title: 'Apps e IoT (quando precisa hardware)',
+    result: 'Controle equipamentos pelo celular com seguranca.',
+    bullets: ['Aplicativo sob medida', 'Monitoramento remoto', 'Alertas em tempo real'],
+    messageGoal: 'apps e IoT com hardware',
+  },
+];
+
+const miniCases = [
+  {
+    id: 'case-1',
+    problem: 'Problema: pedidos perdidos no WhatsApp.',
+    solution: 'Solucao: fluxo de pedido simples e organizado.',
+    result: 'Resultado: atendimento mais rapido e previsivel.',
+  },
+  {
+    id: 'case-2',
+    problem: 'Problema: agenda cheia de remarcacoes.',
+    solution: 'Solucao: confirmacao automatica e lembretes.',
+    result: 'Resultado: rotina mais estavel e menos faltas.',
+  },
+];
+
+const faqs = [
+  {
+    question: 'Quanto tempo leva?',
+    answer: 'Depende do objetivo e da etapa combinada. Voce recebe um prazo simples logo no inicio.',
+  },
+  {
+    question: 'Preciso ter dominio e hospedagem?',
+    answer: 'Se voce ja tem, otimo. Se nao tiver, a gente orienta e ajuda a configurar.',
+  },
+  {
+    question: 'Voces integram com WhatsApp?',
+    answer: 'Sim. Podemos integrar botoes, formularios e fluxos de atendimento.',
+  },
+  {
+    question: 'Da para fazer por etapas?',
+    answer: 'Sim. Entregamos o essencial primeiro e evoluimos conforme voce valida.',
+  },
+  {
+    question: 'Como funciona o suporte?',
+    answer: 'Apos a entrega, voce conta com suporte e ajustes combinados.',
+  },
+  {
+    question: 'Como voces cobram?',
+    answer: 'Orcamento baseado no escopo. Voce sabe o que entra e o que fica para depois.',
+  },
+];
+
+const titleFromSlug = (slug: string) => {
+  return slug
+    .split('-')
+    .filter(Boolean)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+};
+
+const fallbackPreviews: DemoPreview[] = [
+  {
+    id: 'agendamento',
+    title: 'Agenda Facil',
+    description: 'Agendamento com confirmacao e lembrete rapido.',
+    route: '/demos/agendamento.html',
+  },
+  {
+    id: 'dashboard',
+    title: 'Painel de Vendas',
+    description: 'Resumo simples para acompanhar pedidos.',
+    route: '/demos/dashboard.html',
+  },
+  {
+    id: 'institucional',
+    title: 'Site Institucional',
+    description: 'Landing page com CTA direto para contato.',
+    route: '/exemplos',
+  },
+];
+
+const getDemoPreviews = async (): Promise<DemoPreview[]> => {
+  try {
+    const demosDir = path.join(process.cwd(), 'public', 'demos');
+    const metaPath = path.join(demosDir, 'demos.json');
+    let meta: Array<{ name: string; description?: string }> = [];
+
+    try {
+      const raw = await readFile(metaPath, 'utf-8');
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) {
+        meta = parsed;
+      }
+    } catch (err) {
+      // Ignore missing meta file.
+    }
+
+    const files = (await readdir(demosDir)).filter((entry) => entry.endsWith('.html'));
+    const metaMap = new Map(meta.map((demo) => [demo.name, demo.description || '']));
+
+    const previews: DemoPreview[] = files.map((entry) => {
+      const slug = entry.replace(/\.html$/, '');
+      return {
+        id: slug,
+        title: titleFromSlug(slug),
+        description: metaMap.get(slug) || 'Demonstracao ao vivo para entender a experiencia.',
+        route: `/demos/${entry}`,
+      };
+    });
+
+    const fallback = [...previews];
+    fallbackPreviews.forEach((item) => {
+      if (!fallback.find((preview) => preview.route === item.route)) {
+        fallback.push(item);
+      }
+    });
+
+    return fallback.slice(0, 3);
+  } catch (err) {
+    return fallbackPreviews;
+  }
+};
+
+export default async function HomePage() {
+  const whatsappNumber = process.env.WHATSAPP_NUMBER || '5566999999999';
+  const buildWhatsAppLink = (message: string) =>
+    `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+
+  const previewCards = await getDemoPreviews();
 
   return (
-    <main className="min-h-screen bg-transparent text-[#E6EDF3] neural-grid">
-      {/* Hero Section */}
-      <section className="pt-24 pb-16 px-4 sm:px-6 lg:px-8 relative">
-        <div className="absolute inset-0 pointer-events-none holographic" />
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center">
-            <h1 
-              className="text-4xl md:text-6xl font-bold mb-6 leading-tight flex items-center justify-center gap-3"
-            >
-              <div>
-                <span className="block">IA, Automação e Software</span>
-                <span className="block text-gradient mt-2">sob medida — acessível e sem burocracia.</span>
-              </div>
+    <main className={styles.page}>
+      <div className={styles.gridOverlay} />
+
+      <section className={`${styles.section} ${styles.heroSection}`}>
+        <div className={styles.container}>
+          <div className={styles.hero}>
+            <h1 className={styles.heroTitle}>
+              IA, automacao e sites que fazem seu negocio vender e atender melhor.
             </h1>
-            
-            <p 
-              className="text-lg md:text-xl max-w-3xl mx-auto mb-10 text-[#E6EDF3]/90"
-            >
-              Sites, apps e integrações inteligentes com preço justo e entrega rápida.
+            <p className={styles.heroSubtitle}>
+              Solucoes sob medida, sem burocracia: do site ao WhatsApp e automacoes internas.
             </p>
-            
-            <div
-              className="flex flex-wrap justify-center gap-4 mb-12"
-            >
-              <Link 
-                href="/exemplos" 
-                className="px-6 py-3 bg-[#00E5FF] text-[#0B0F14] rounded-md font-semibold hover:bg-[#00E5FF]/90 transition-colors flex items-center"
-              >
-                Ver Exemplos <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-              <Link 
-                href="#contato" 
-                className="px-6 py-3 bg-[#FF8A00] text-[#0B0F14] rounded-md font-semibold hover:bg-[#FF8A00]/90 transition-colors flex items-center"
-              >
-                Fazer Orçamento <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-              <Link 
-                href={`https://wa.me/${process.env.WHATSAPP_NUMBER || '5566999999999'}`} 
-                target="_blank" 
+            <div className={styles.heroActions}>
+              <a
+                href={buildWhatsAppLink('Ola! Quero entender qual solucao serve para o meu negocio.')}
+                target="_blank"
                 rel="noopener noreferrer"
-                className="px-6 py-3 border border-[#00E5FF] text-[#00E5FF] rounded-md font-semibold hover:bg-[#00E5FF]/10 transition-colors flex items-center"
+                className={styles.primaryCta}
               >
-                WhatsApp <ArrowRight className="ml-2 h-4 w-4" />
+                Falar no WhatsApp
+                <ArrowRight className={styles.ctaIcon} />
+              </a>
+              <Link href="/exemplos" className={styles.secondaryCta}>
+                Ver exemplos funcionando
               </Link>
             </div>
-            
-            <div 
-              className="flex flex-wrap justify-center gap-4 mb-12"
-            >
-              {heroBadges.map((badge, index) => (
-                <span 
-                  key={index}
-                  className="px-4 py-2 bg-[#2A303D] rounded-full text-sm font-medium text-[#E6EDF3]/80"
-                >
-                  {badge}
+            <div className={styles.heroPills}>
+              {['Orcamento rapido', 'Entrega por etapas', 'Suporte pos-entrega'].map((pill) => (
+                <span key={pill} className={styles.heroPill}>
+                  {pill}
                 </span>
               ))}
-            </div>
-          </div>
-          
-          {/* Hero Image/Art */}
-          <div className="mt-12 rounded-xl overflow-hidden neon-border">
-            <div className="bg-gradient-to-br from-black to-neutral-900 rounded-xl h-64 md:h-96 flex items-center justify-center relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-green-900/10 to-blue-900/10" />
-              <div className="text-center p-8">
-                <div className="bg-gradient-to-r from-green-500 to-blue-500 p-1 rounded-full inline-block mb-6">
-                  <div className="bg-black rounded-full p-6">
-                    <ZapIcon className="h-16 w-16 text-green-400" />
-                  </div>
-                </div>
-                <h3 className="text-2xl font-bold mb-2">Tecnologia Avançada</h3>
-                <p className="text-[#E6EDF3]/80 max-w-md mx-auto">Soluções de IA e automação sob medida para o seu negócio</p>
-              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Como Funcionamos Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-black/40">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Como Funcionamos</h2>
-            <p className="text-lg text-[#E6EDF3]/80 max-w-2xl mx-auto">Nosso processo de desenvolvimento focado em resultados e eficiência</p>
+      <section className={styles.section}>
+        <div className={styles.container}>
+          <div className={styles.sectionHeader}>
+            <h2 className={styles.sectionTitle}>Escolha seu objetivo</h2>
+            <p className={styles.sectionSubtitle}>
+              Escolha o que voce quer resolver. A gente monta o caminho ideal para o seu negocio.
+            </p>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              { step: 1, title: "Descoberta", description: "Entendemos seu problema e necessidades", icon: Users },
-              { step: 2, title: "Protótipo Rápido", description: "Criamos um MVP funcional em dias", icon: Zap },
-              { step: 3, title: "Entrega Iterativa", description: "Entregas contínuas com feedback", icon: Clock },
-              { step: 4, title: "Suporte", description: "Assistência contínua após lançamento", icon: MessageCircle }
-            ].map((item) => (
-              <div 
-                key={item.step}
-                className="text-center p-6 bg-neutral-900/50 rounded-lg border border-green-500/20"
-              >
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-green-500/10 to-blue-500/10 flex items-center justify-center mx-auto mb-4">
-                  <item.icon className="h-8 w-8 text-green-400" />
+
+          <div className={styles.objectiveGrid}>
+            {objectives.map((objective) => {
+              const message = `Ola! Quero ${objective.messageGoal}. Meu negocio e [tipo]. Hoje eu tenho [cenario]. Quero melhorar [meta].`;
+              return (
+                <div key={objective.id} className={styles.objectiveCard}>
+                  <h3 className={styles.objectiveTitle}>{objective.title}</h3>
+                  <p className={styles.objectiveResult}>{objective.result}</p>
+                  <ul className={styles.objectiveList}>
+                    {objective.bullets.map((bullet) => (
+                      <li key={bullet} className={styles.objectiveListItem}>
+                        <span className={styles.objectiveDot} />
+                        {bullet}
+                      </li>
+                    ))}
+                  </ul>
+                  <div className={styles.objectiveActions}>
+                    <a
+                      href={buildWhatsAppLink(message)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={styles.objectivePrimary}
+                    >
+                      Quero isso
+                    </a>
+                    <Link href="/solucoes" className={styles.objectiveSecondary}>
+                      Ver solucoes
+                    </Link>
+                  </div>
                 </div>
-                <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
-                <p className="text-[#E6EDF3]/70">{item.description}</p>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.section}>
+        <div className={styles.container}>
+          <div className={styles.sectionHeader}>
+            <h2 className={styles.sectionTitle}>Veja funcionando (ao vivo)</h2>
+            <p className={styles.sectionSubtitle}>
+              Provas rapidas para voce sentir a experiencia antes de falar com a gente.
+            </p>
+          </div>
+
+          <div className={styles.previewGrid}>
+            {previewCards.length === 0 ? (
+              <div className={styles.previewEmpty}>
+                Nenhuma demonstracao disponivel no momento.
+              </div>
+            ) : (
+              previewCards.map((preview) => (
+                <div key={preview.id} className={styles.previewCard}>
+                  <div className={styles.previewFrame}>
+                    <iframe
+                      title={`Previa ${preview.title}`}
+                      src={preview.route}
+                      className={styles.previewIframe}
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className={styles.previewContent}>
+                    <div>
+                      <h3 className={styles.previewTitle}>{preview.title}</h3>
+                      <p className={styles.previewDescription}>{preview.description}</p>
+                    </div>
+                    <a
+                      href={preview.route}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={styles.previewButton}
+                    >
+                      Abrir exemplo
+                      <ArrowRight className={styles.ctaIcon} />
+                    </a>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+
+          <div className={styles.sectionHeaderAlt}>
+            <h3 className={styles.sectionTitleAlt}>Resultados em projetos reais</h3>
+            <p className={styles.sectionSubtitle}>
+              Histories reais de negocios que organizaram o atendimento e ganharam tempo.
+            </p>
+          </div>
+
+          <div className={styles.casesGrid}>
+            {miniCases.map((caseItem) => (
+              <div key={caseItem.id} className={styles.caseCard}>
+                <p className={styles.caseLine}>{caseItem.problem}</p>
+                <p className={styles.caseLine}>{caseItem.solution}</p>
+                <p className={styles.caseResult}>{caseItem.result}</p>
+                <Link href="/cases" className={styles.caseLink}>
+                  Ver case
+                  <ArrowRight className={styles.ctaIcon} />
+                </Link>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Teaser Preços */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="bg-gradient-to-r from-green-900/10 to-blue-900/10 rounded-2xl p-8 md:p-12 border border-green-500/20 flex flex-col md:flex-row items-center justify-between gap-8">
-            <div className="md:w-2/3">
-              <h2 className="text-3xl font-bold mb-4">Quanto custa tirar sua ideia do papel?</h2>
-              <p className="text-xl text-[#E6EDF3]/80 mb-6">
-                Não cobramos fortunas. Nossos preços começam em <span className="text-green-400 font-bold">R$ 100</span> e vão até onde sua imaginação (e necessidade) alcançar.
-              </p>
-              <div className="flex flex-wrap gap-4">
-                 <div className="flex items-center gap-2 text-sm text-[#E6EDF3]/60">
-                    <Code size={16} /> Sites
-                 </div>
-                 <div className="flex items-center gap-2 text-sm text-[#E6EDF3]/60">
-                    <MessageCircle size={16} /> Bots
-                 </div>
-                 <div className="flex items-center gap-2 text-sm text-[#E6EDF3]/60">
-                    <Rocket size={16} /> IA
-                 </div>
+      <section className={styles.section}>
+        <div className={styles.container}>
+          <div className={styles.splitSection}>
+            <div>
+              <h2 className={styles.sectionTitle}>Como funciona</h2>
+              <div className={styles.stepsList}>
+                {[
+                  { title: 'Descoberta', text: 'Entendemos seu objetivo e o que mais trava hoje.', icon: Search },
+                  { title: 'Prototipo', text: 'Voce aprova o caminho antes de construir tudo.', icon: PenTool },
+                  { title: 'Entrega', text: 'Implementacao por etapas para voce ja usar.', icon: Rocket },
+                  { title: 'Suporte', text: 'Acompanhamos depois da entrega para ajustes.', icon: LifeBuoy },
+                ].map((step) => (
+                  <div key={step.title} className={styles.stepCard}>
+                    <div className={styles.stepIcon}>
+                      <step.icon className={styles.icon} />
+                    </div>
+                    <div>
+                      <h3 className={styles.stepTitle}>{step.title}</h3>
+                      <p className={styles.stepText}>{step.text}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
-            <div className="md:w-1/3 flex justify-center md:justify-end">
-              <Link 
-                href="/precos" 
-                className="px-8 py-4 bg-white text-black rounded-full font-bold hover:bg-gray-200 transition-colors flex items-center"
-              >
-                Ver Tabela Flexível <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
+
+            <div>
+              <h2 className={styles.sectionTitle}>Perguntas rapidas</h2>
+              <div className={styles.faqList}>
+                {faqs.map((faq) => (
+                  <details key={faq.question} className={styles.faqItem}>
+                    <summary className={styles.faqSummary}>
+                      <span>{faq.question}</span>
+                      <span className={styles.faqToggle}>+</span>
+                    </summary>
+                    <p className={styles.faqAnswer}>{faq.answer}</p>
+                  </details>
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Teaser Sobre */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-black/40">
-        <div className="max-w-7xl mx-auto text-center">
-            <h2 className="text-3xl font-bold mb-6">Quem somos nós?</h2>
-            <p className="text-lg text-[#E6EDF3]/70 max-w-2xl mx-auto mb-8">
-                Neurelix não é apenas uma agência de software. Somos parceiros de tecnologia focados em desburocratizar a inovação.
+      <section className={styles.section}>
+        <div className={styles.container}>
+          <div className={styles.sectionHeader}>
+            <h2 className={styles.sectionTitle}>Preco transparente</h2>
+            <p className={styles.sectionSubtitle}>
+              O valor depende do escopo e do que ja existe no seu negocio.
             </p>
-            <Link 
-                href="/sobre" 
-                className="text-green-400 font-semibold hover:text-green-300 transition-colors inline-flex items-center"
-            >
-                Conheça nossa história <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
+          </div>
+
+          <div className={styles.pricingGrid}>
+            <div className={styles.pricingCardHighlight}>
+              <h3 className={styles.pricingTitle}>Microsolucoes a partir de R$ 100</h3>
+              <p className={styles.pricingText}>
+                Ajustes rapidos, paginas simples e melhorias pontuais.
+              </p>
+              <Link href="/precos" className={styles.pricingLink}>
+                Solicitar agora
+                <ArrowRight className={styles.ctaIcon} />
+              </Link>
+            </div>
+            <div className={styles.pricingCard}>
+              <h3 className={styles.pricingTitle}>Projeto sob medida</h3>
+              <p className={styles.pricingText}>
+                Planejamento completo com entregas por etapas e acompanhamento.
+              </p>
+              <a
+                href={buildWhatsAppLink('Ola! Quero falar sobre um projeto sob medida.')}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.pricingLink}
+              >
+                Falar com especialista
+                <ArrowRight className={styles.ctaIcon} />
+              </a>
+            </div>
+            <div className={styles.pricingCard}>
+              <h3 className={styles.pricingTitle}>Consultoria por hora</h3>
+              <p className={styles.pricingText}>
+                Direcionamento rapido para destravar decisoes tecnicas e estrategicas.
+              </p>
+              <a
+                href={buildWhatsAppLink('Ola! Quero agendar uma consultoria rapida.')}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.pricingLink}
+              >
+                Agendar conversa
+                <ArrowRight className={styles.ctaIcon} />
+              </a>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Contact Section */}
-      <ContactSection />
+      <section className={styles.finalCtaSection}>
+        <div className={styles.container}>
+          <div className={styles.finalCtaBox}>
+            <h2 className={styles.finalCtaTitle}>
+              Me diga o seu objetivo e eu te respondo com um plano simples.
+            </h2>
+            <div className={styles.finalCtaActions}>
+              <a
+                href={buildWhatsAppLink('Ola! Quero falar sobre uma solucao para o meu negocio.')}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.primaryCta}
+              >
+                Chamar no WhatsApp
+                <ArrowRight className={styles.ctaIcon} />
+              </a>
+              <Link href="/exemplos" className={styles.secondaryCta}>
+                Ver exemplos
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }

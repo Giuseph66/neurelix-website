@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Lock, ArrowRight, AlertCircle, ShieldCheck } from 'lucide-react';
+import { Lock, ArrowRight, AlertCircle, ShieldCheck, Eye, EyeOff } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import NeurelixLogo from '@/components/NeurelixLogo';
 import styles from './page.module.css';
@@ -11,6 +11,7 @@ export default function AdminLogin() {
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -89,7 +90,7 @@ export default function AdminLogin() {
                         <div className={styles.inputWrapper}>
                             <Lock className={styles.inputIcon} />
                             <input
-                                type="password"
+                                type={showPassword ? "text" : "password"}
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 className={styles.passwordInput}
@@ -98,6 +99,19 @@ export default function AdminLogin() {
                                 autoFocus
                                 disabled={loading}
                             />
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className={styles.eyeButton}
+                                disabled={loading}
+                                aria-label={showPassword ? "Ocultar senha" : "Mostrar senha"}
+                            >
+                                {showPassword ? (
+                                    <EyeOff className={styles.eyeIcon} />
+                                ) : (
+                                    <Eye className={styles.eyeIcon} />
+                                )}
+                            </button>
                         </div>
                     </div>
 

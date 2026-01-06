@@ -45,7 +45,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-black border-t border-green-500/20 pt-12 pb-8">
+    <footer className="bg-transparent border-n pt-12 pb-8">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-8">
           <div className="lg:col-span-2">
@@ -107,7 +107,7 @@ const Footer = () => {
 
         <div className="pt-8 border-t border-[#2A303D] text-center">
           <p className="text-[#E6EDF3]/60 text-sm">
-            © <Link href="/admin/login" className="hover:text-green-400 transition-colors cursor-default">{new Date().getFullYear()}</Link> Neurelix. Todos os direitos reservados.
+            © {new Date().getFullYear()} Neurelix. Todos os direitos reservados.
           </p>
         </div>
       </div>

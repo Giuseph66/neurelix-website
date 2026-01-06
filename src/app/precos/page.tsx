@@ -55,7 +55,7 @@ const pricingModels = [
 
 export default function PricingPage() {
   return (
-    <div className="min-h-screen bg-black neural-grid text-[#E6EDF3] py-16 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-transparent text-[#E6EDF3] py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold mb-6 flex items-center justify-center gap-3">
