@@ -1,28 +1,27 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from 'next/server';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ message: 'Método não permitido' });
-  }
-
-  const { name, email, phone, message } = req.body;
-
-  // Validação dos campos
-  if (!name || !email || !message) {
-    return res.status(400).json({ 
-      message: 'Campos obrigatórios não preenchidos' 
-    });
-  }
-
-  // Validação de email
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email)) {
-    return res.status(400).json({ 
-      message: 'Email inválido' 
-    });
-  }
-
+export async function POST(request: Request) {
   try {
+    const body = await request.json();
+    const { name, email, phone, message } = body;
+
+    // Validação dos campos
+    if (!name || !email || !message) {
+      return NextResponse.json(
+        { message: 'Campos obrigatórios não preenchidos' },
+        { status: 400 }
+      );
+    }
+
+    // Validação de email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return NextResponse.json(
+        { message: 'Email inválido' },
+        { status: 400 }
+      );
+    }
+
     // Aqui você pode implementar o envio do email usando um serviço como Resend, Nodemailer, etc.
     // Por enquanto, apenas simulando o envio para demonstração
     
@@ -56,13 +55,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
     */
 
-    return res.status(200).json({ 
-      message: 'Mensagem enviada com sucesso! Entraremos em contato em breve.' 
-    });
+    return NextResponse.json(
+      { message: 'Mensagem enviada com sucesso! Entraremos em contato em breve.' },
+      { status: 200 }
+    );
   } catch (error) {
     console.error('Erro ao processar o formulário de contato:', error);
-    return res.status(500).json({ 
-      message: 'Erro interno ao processar a mensagem' 
-    });
+    return NextResponse.json(
+      { message: 'Erro interno ao processar a mensagem' },
+      { status: 500 }
+    );
   }
 }
